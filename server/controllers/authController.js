@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
-import User from '../models/user.models';
-import { setToken } from '../helper/setToken';
+import User from '../models/user.models.js';
+import { setToken } from '../helper/setToken.js';
 
 export const registerUser = async (req, res) => {
   const { name, email, password, contactNumber, address, role } = req.body;
