@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
-import authRoutes from "./routes/auth.routes.js"
+import userRoutes from "./routes/userRoutes.js"
 import { connectDb } from "./db/connectDb.js";
 import dotenv from "dotenv"
 
@@ -20,7 +20,8 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: "Something went wrong!" });
 });
 
-app.use("/api/auth",authRoutes);
+app.use("/api/users/",userRoutes);
+app.use("/api/scrapcollectors/",scra);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {

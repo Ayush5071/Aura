@@ -17,7 +17,6 @@ const ScrapCollectorSchema = new mongoose.Schema({
   },
   contactNumber: {
     type: String,
-    required: true,
   },
   areaPreferences: {
     type: [String], 
