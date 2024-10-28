@@ -18,7 +18,6 @@ const UserSchema = new mongoose.Schema({
   },
   contactNumber: {
     type: String,
-    required: true,
   },
   role: {
     type: String,
@@ -27,7 +26,6 @@ const UserSchema = new mongoose.Schema({
   },
   address: {
     type: String,
-    required: true,
   }
 }, { timestamps: true });
 

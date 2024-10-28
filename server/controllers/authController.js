@@ -52,7 +52,6 @@ export const loginUser = async (req, res) => {
         return res.status(400).json({ error: 'Invalid credentials' });
       }
 
-      // sending the details to store jwt
       const {username,role} = user;
       setToken(res,{username,role})
       res.json({ msg: 'Logged in successfully', userId: user._id, role: user.role });
