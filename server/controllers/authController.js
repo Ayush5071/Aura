@@ -3,22 +3,22 @@ import User from '../models/user.models.js';
 import { setToken } from '../helper/setToken.js';
 
 export const registerUser = async (req, res) => {
-  const { name, email, password, contactNumber, address, role } = req.body;
+  const { name, email, password, contactNumber} = req.body;
 
   try {
     let user = await User.findOne({ email });
     if (user) {
       return res.status(400).json({ error: 'User already exists' });
     }
+    console.log("ye ho gya")
 
     user = new User({
       name,
       email,
       password,
       contactNumber,
-      address,
-      role
     });
+    console.log(user);
 
     await user.save();
 

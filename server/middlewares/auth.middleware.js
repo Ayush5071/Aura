@@ -15,6 +15,7 @@ export const isAuthenticated = (req, res, next) => {
             userId: decoded.userId,
             role: decoded.role
         };
+        console.log("scrap collector ki id ->",req.user.userId)
         next();
     } catch (error) {
         return res.status(401).json({ error: 'Invalid or expired token' });
