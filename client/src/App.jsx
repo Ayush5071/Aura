@@ -1,12 +1,17 @@
-import Hero from "./components/landing-page/Hero.jsx";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import Landing from './pages/Landing.jsx';
+import Login from './pages/Login.jsx';
 
-
-function App() {
+const App = () => {
   return (
-    <>
-        <Hero />
-
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </Router>
   );
-}
+};
+
 export default App;
