@@ -28,6 +28,7 @@ app.use("/api/user/", userRoutes);
 app.use("/api/scrapcollector/", scrapCollectorRoutes);
 app.use("/api/user/scraprequest/",requestRoutes);
 app.use("/api/scrapcollector/scraprequest/",screquestRoutes); // sc = scrap collector 
+app.use("/api/admin/scrapprice/",scrapPriceRoutes); // sc = scrap collector 
 
 const PORT = process.env.PORT || 4000;
 
