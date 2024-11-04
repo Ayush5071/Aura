@@ -1,4 +1,5 @@
-import ScrapPrice from '../models/scrapPrice.models.js';
+import ScrapPrice from "../models/scrapPrice.models.js";
+
 
 export const setScrapPrice = async (req, res) => {
   const { type, pricePerKg } = req.body;

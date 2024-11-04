@@ -6,6 +6,8 @@ import userRoutes from "./routes/userRoutes.js";
 import scrapCollectorRoutes from "./routes/scrapCollectorRoutes.js";
 import requestRoutes from "./routes/requestRoutes.js";
 import screquestRoutes from "./routes/screquestRoutes.js";
+import scrapPriceRoutes from "./routes/scrapPriceRoutes.js";
+import billRoutes from "./routes/billRoutes.js"
 
 import { connectDb } from "./db/connectDb.js";
 import dotenv from "dotenv";
@@ -28,7 +30,8 @@ app.use("/api/user/", userRoutes);
 app.use("/api/scrapcollector/", scrapCollectorRoutes);
 app.use("/api/user/scraprequest/",requestRoutes);
 app.use("/api/scrapcollector/scraprequest/",screquestRoutes); // sc = scrap collector 
-app.use("/api/admin/scrapprice/",scrapPriceRoutes); // sc = scrap collector 
+app.use("/api/admin/scrapprice/",scrapPriceRoutes); 
+app.use("/api/bill/",billRoutes); 
 
 const PORT = process.env.PORT || 4000;
 
