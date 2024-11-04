@@ -1,4 +1,3 @@
-import jwt from 'jsonwebtoken';
 import ScrapCollector from '../models/scrapCollector.models.js';
 import { setToken } from '../helper/setToken.js';
 
