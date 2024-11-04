@@ -20,7 +20,9 @@ export const registerScrapCollector = async (req, res) => {
 
     await scrapCollector.save();
 
-     const {_id} = scrapCollector;
+     const _id = scrapCollector._id;
+
+     console.log("ye gya h set token me ->",_id)
 
     setToken(res,{_id,role:"scrapCollector"});
 

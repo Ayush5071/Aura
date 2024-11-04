@@ -24,8 +24,8 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: "Something went wrong!" });
 });
 
-app.use("/api/users/", userRoutes);
-app.use("/api/scrapcollectors/", scrapCollectorRoutes);
+app.use("/api/user/", userRoutes);
+app.use("/api/scrapcollector/", scrapCollectorRoutes);
 app.use("/api/user/scraprequest/",requestRoutes);
 app.use("/api/scrapcollector/scraprequest/",screquestRoutes); // sc = scrap collector 
 

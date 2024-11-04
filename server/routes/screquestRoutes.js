@@ -4,7 +4,7 @@ import { acceptPickupRequest, getAcceptedRequests, getRequestsByStatus, updateRe
 const router = express.Router();
 
 
-router.post('/accept',isAuthenticated,isScrapCollector,acceptPickupRequest);
+router.post('/accept/:requestId',isAuthenticated,isScrapCollector,acceptPickupRequest);
 
 router.get('/myrequests',isAuthenticated,isScrapCollector,getAcceptedRequests);
 

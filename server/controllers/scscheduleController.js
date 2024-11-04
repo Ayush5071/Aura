@@ -2,7 +2,7 @@ import PickupSchedule from '../models/pickupSchedule.models.js';
 import ScrapCollector from '../models/scrapCollector.models.js';
 
 export const acceptPickupRequest = async (req, res) => {
-  const { requestId } = req.body;
+  const { requestId } = req.params;
   const { userId } = req.user;
 
   try {
@@ -38,10 +38,9 @@ export const getAcceptedRequests = async (req, res) => {
 
 export const getRequestsByStatus = async (req, res) => {
   const { status } = req.params;
-  const { userId } = req.user;
 
   try {
-    const requests = await PickupSchedule.find({ collectorId: userId, status })
+    const requests = await PickupSchedule.find({ status })
       .populate('customerId', 'name contactNumber')
       .populate('collectorId', 'name contactNumber');
     res.json(requests);

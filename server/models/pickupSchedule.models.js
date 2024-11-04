@@ -11,10 +11,10 @@ const PickupScheduleSchema = new mongoose.Schema({
     ref: 'ScrapCollector',
     default: null,
   },
-  scrapDetails: {
+  scrapDetails: [{
     weight: { type: Number, required: true },
     type: { type: String, required: true }, 
-  },
+  }],
   pickupDate: {
     type: Date,
     required: true,
