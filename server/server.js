@@ -4,6 +4,9 @@ import cookieParser from "cookie-parser";
 
 import userRoutes from "./routes/userRoutes.js";
 import scrapCollectorRoutes from "./routes/scrapCollectorRoutes.js";
+import requestRoutes from "./routes/requestRoutes.js";
+import screquestRoutes from "./routes/screquestRoutes.js";
+
 import { connectDb } from "./db/connectDb.js";
 import dotenv from "dotenv";
 

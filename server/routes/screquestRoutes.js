@@ -1,8 +1,15 @@
 import express from "express";
-import { isScrapCollector } from "../middlewares/auth.middleware";
+import { isAuthenticated, isScrapCollector } from "../middlewares/auth.middleware.js";
+import { acceptPickupRequest, getAcceptedRequests, getRequestsByStatus, updateRequestStatus } from "../controllers/scscheduleController.js";
 const router = express.Router();
 
-router.post('/accept',isScrapCollector,);
-router.get('/myrequests',isScrapCollector,);
-router.get('/requests',isScrapCollector,);
-router.post('/updateStatus/:status',isScrapCollector,);
+
+router.post('/accept',isAuthenticated,isScrapCollector,acceptPickupRequest);
+
+router.get('/myrequests',isAuthenticated,isScrapCollector,getAcceptedRequests);
+
+router.get('/requests/:status',isAuthenticated,isScrapCollector,getRequestsByStatus);
+
+router.post('/updateStatus/:status',isAuthenticated,isScrapCollector,updateRequestStatus);
+
+export default router;

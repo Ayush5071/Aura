@@ -1,4 +1,4 @@
-import PickupSchedule from "../models/pickupSchedule.models";
+import PickupSchedule from "../models/pickupSchedule.models.js";
 
 export const createPickupSchedule = async (req, res) => {
   const { customerId, scrapDetails, pickupDate, location } = req.body;
