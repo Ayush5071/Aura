@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 export const setToken = (res, { _id, role }) => {
     console.log("scrap col hai -- ", role);
     const token = jwt.sign({ userId: _id, role }, process.env.JWT_SECRET, {
-        expiresIn: '1h'
+        expiresIn: '2h'
     });
 
     res.cookie('token', token, {

@@ -21,7 +21,7 @@ const UserSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['customer', 'admin'], 
+    enum: ['customer', 'admin'],
     default: 'customer',
   },
   address: {
@@ -29,15 +29,18 @@ const UserSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-// bofore saving--> hashing the password
 UserSchema.pre('save', async function (next) {
+  if (this.email === 'ayush.20234046@mnnit.ac.in') {
+    this.role = 'admin';
+  }
+  
   if (!this.isModified('password')) return next();
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
 
-// methos to compare password
+// Method to compare password
 UserSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
