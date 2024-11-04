@@ -1,15 +1,14 @@
 import Enter from "./Enter.jsx";
 import Navbar from "./Navbar.jsx";
+import { useNavigate } from "react-router-dom";
 
 
 const Hero = () => {
-
+  const navigate = useNavigate();
   const handleLoginClick = () =>{
-    //Redirect to login page
+    navigate("/signup");
   }
-  const handleSignUpClick = () =>{
-    //Redirect to sign up page
-  }
+
   return (
     <>
       <div className="bg-[url('/landing-page/th.jpeg')] relative  w-full bg-cover h-screen">
@@ -26,7 +25,6 @@ const Hero = () => {
         <span className="font-semibold text-yellow-400"> Discover how you can be a hero in this monumental shift!</span>
     </p>
     <div className ='flex  gap-4 '>
-    <Enter text='Join the Stark Initiative ' icon='🤖' onClick={handleSignUpClick}/>
     <Enter text='Join the Sustainability Squad' icon = '🌍'onClick={handleLoginClick}/>
     </div>
 </div>

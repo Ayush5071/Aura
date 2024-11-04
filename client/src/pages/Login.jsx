@@ -1,8 +1,12 @@
-
+import LoginCard from "../components/login-page/LoginCard";
 const Login = () => {
+ 
+
   return (
-    <div>login</div>
-  )
-}
+   <>
+   <LoginCard/>
+   </>
+  );
+};
 
 export default Login;
