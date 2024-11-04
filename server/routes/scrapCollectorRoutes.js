@@ -1,14 +1,27 @@
-import e from "express";
-import { getScrapCollectorProfile, loginScrapCollector, logoutScrapCollector, registerScrapCollector } from "../controllers/scrapCollector.controller";
-import { isAuthenticated, isScrapCollector } from "../middlewares/auth.middleware.js";
-const router = e.Router();
+import express from "express";
+import {
+  getScrapCollectorProfile,
+  loginScrapCollector,
+  logoutScrapCollector,
+  registerScrapCollector,
+} from "../controllers/scrapCollector.controller.js";
+import {
+  isAuthenticated,
+  isScrapCollector,
+} from "../middlewares/auth.middleware.js";
+const router = express.Router();
 
-router.post('/register', registerScrapCollector);
+router.post("/register", registerScrapCollector);
 
-router.post('/login', loginScrapCollector);
+router.post("/login", loginScrapCollector);
 
-router.get('/profile', isAuthenticated, isScrapCollector, getScrapCollectorProfile);
+router.get(
+  "/profile",
+  isAuthenticated,
+  isScrapCollector,
+  getScrapCollectorProfile
+);
 
-router.post('/logout', isAuthenticated, isScrapCollector, logoutScrapCollector);
+router.post("/logout", isAuthenticated, isScrapCollector, logoutScrapCollector);
 
 export default router;
