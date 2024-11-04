@@ -12,7 +12,7 @@ const Hero = () => {
   }
   return (
     <>
-      <div className="bg-[url('/th.jpeg')] relative  w-full bg-cover h-screen">
+      <div className="bg-[url('/landing-page/th.jpeg')] relative  w-full bg-cover h-screen">
       <div className="absolute inset-0 bg-black bg-opacity-50"></div> 
 
        {/**NAVBAR */}
