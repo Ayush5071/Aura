@@ -23,6 +23,8 @@ app.use((err, req, res, next) => {
 
 app.use("/api/users/", userRoutes);
 app.use("/api/scrapcollectors/", scrapCollectorRoutes);
+app.use("/api/user/scraprequest/",requestRoutes);
+app.use("/api/scrapcollector/scraprequest/",screquestRoutes); // sc = scrap collector 
 
 const PORT = process.env.PORT || 4000;
 
