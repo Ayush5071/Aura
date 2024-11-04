@@ -22,15 +22,9 @@ export const registerUser = async (req, res) => {
 
     await user.save();
 
-    const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, {
-      expiresIn: '1h'
-    });
+    const {_id,role} = user;
 
-    res.cookie('token', token, {
-      httpOnly: true, 
-      secure: process.env.NODE_ENV === 'production', 
-      maxAge: 60 * 60 * 1000 
-    });
+    setToken(res,{_id,role});
 
     res.status(201).json({ msg: 'User registered successfully', userId: user._id, role: user.role });
   } catch (error) {
@@ -52,8 +46,9 @@ export const loginUser = async (req, res) => {
         return res.status(400).json({ error: 'Invalid credentials' });
       }
 
-      const {username,role} = user;
-      setToken(res,{username,role})
+      const {_id,role} = user;
+
+      setToken(res,{_id,role});
       res.json({ msg: 'Logged in successfully', userId: user._id, role: user.role });
     } catch (error) {
       res.status(500).json({ error: 'Server error', error });

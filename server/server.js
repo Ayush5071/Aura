@@ -3,6 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 
 import userRoutes from "./routes/userRoutes.js"
+import ScrapCollectorRoutes from "./routes/scrapCollectorRoutes.js";
 import { connectDb } from "./db/connectDb.js";
 import dotenv from "dotenv"
 
@@ -20,10 +21,13 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: "Something went wrong!" });
 });
 
+
 app.use("/api/users/",userRoutes);
-app.use("/api/scrapcollectors/",scra);
+app.use("/api/scrapcollectors/",ScrapCollectorRoutes);
+
 
 const PORT = process.env.PORT || 4000;
+
 app.listen(PORT, () => {
   connectDb();
   console.log(`App is running very fine on port ${PORT}`);

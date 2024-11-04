@@ -1,7 +1,8 @@
-import e from "express";
-import { getScrapCollectorProfile, loginScrapCollector, logoutScrapCollector, registerScrapCollector } from "../controllers/scrapCollector.controller";
+import express from "express";
+import { getScrapCollectorProfile, loginScrapCollector, logoutScrapCollector, registerScrapCollector } from "../controllers/scrapCollector.controller.js";
 import { isAuthenticated, isScrapCollector } from "../middlewares/auth.middleware.js";
-const router = e.Router();
+
+const router = express.Router();
 
 router.post('/register', registerScrapCollector);
 
