@@ -3,34 +3,28 @@ import User from '../models/user.models.js';
 import { setToken } from '../helper/setToken.js';
 
 export const registerUser = async (req, res) => {
-  const { name, email, password, contactNumber, address, role } = req.body;
+  const { name, email, password, contactNumber} = req.body;
 
   try {
     let user = await User.findOne({ email });
     if (user) {
       return res.status(400).json({ error: 'User already exists' });
     }
+    console.log("ye ho gya")
 
     user = new User({
       name,
       email,
       password,
       contactNumber,
-      address,
-      role
     });
+    console.log(user);
 
     await user.save();
 
-    const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, {
-      expiresIn: '1h'
-    });
+    const {_id,role} = user;
 
-    res.cookie('token', token, {
-      httpOnly: true, 
-      secure: process.env.NODE_ENV === 'production', 
-      maxAge: 60 * 60 * 1000 
-    });
+    setToken(res,{_id,role});
 
     res.status(201).json({ msg: 'User registered successfully', userId: user._id, role: user.role });
   } catch (error) {
@@ -52,8 +46,9 @@ export const loginUser = async (req, res) => {
         return res.status(400).json({ error: 'Invalid credentials' });
       }
 
-      const {username,role} = user;
-      setToken(res,{username,role})
+      const {_id,role} = user;
+
+      setToken(res,{_id,role});
       res.json({ msg: 'Logged in successfully', userId: user._id, role: user.role });
     } catch (error) {
       res.status(500).json({ error: 'Server error', error });
