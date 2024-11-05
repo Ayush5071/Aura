@@ -21,7 +21,7 @@ const SignupCard = () => {
       return 
     }
     try {
-      const response = await axios.post(`http://localhost:4000/api/users/register`, {
+      const response = await axios.post(`http://localhost:4000/api/user/register`, {
         name, email, password
       })
       console.log(response.data);

@@ -16,7 +16,7 @@ const LoginCard = () => {
     const handleLogin = async (e) => {
       e.preventDefault();
       try {
-        const response = await axios.post(`http://localhost:4000/api/users/login`, {
+        const response = await axios.post(`http://localhost:4000/api/user/login`, {
           email: username,
           password
         });
