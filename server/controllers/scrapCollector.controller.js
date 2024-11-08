@@ -1,4 +1,3 @@
-import jwt from 'jsonwebtoken';
 import ScrapCollector from '../models/scrapCollector.models.js';
 import { setToken } from '../helper/setToken.js';
 
@@ -19,8 +18,14 @@ export const registerScrapCollector = async (req, res) => {
       areaPreference
     });
 
-    setToken(res, { id: scrapCollector._id, role: 'scrapCollector' });
-    
+    await scrapCollector.save();
+
+     const _id = scrapCollector._id;
+
+     console.log("ye gya h set token me ->",_id)
+
+    setToken(res,{_id,role:"scrapCollector"});
+
     res.status(201).json({ msg: 'Scrapcollector registered successfully', userId: scrapCollector._id });
   } catch (error) {
     res.status(500).json({ error: 'Server error', error });
@@ -29,19 +34,27 @@ export const registerScrapCollector = async (req, res) => {
 
 export const loginScrapCollector = async (req, res) => {
   const { email, password } = req.body;
+//   console.log("login -- ",email)
 
   try {
     const scrapCollector = await ScrapCollector.findOne({ email });
+    console.log("login --",scrapCollector);
     if (!scrapCollector) {
       return res.status(400).json({ error: 'Invalid credentials' });
     }
+    
+    console.log("yaha tk shi h");
 
     const isMatch = await scrapCollector.matchPassword(password);
     if (!isMatch) {
       return res.status(400).json({ error: 'Invalid credentials' });
     }
 
-    setToken(res, { id: scrapCollector._id, role: 'scrapCollector' });
+    const {_id} = scrapCollector;
+
+    console.log("id check -->",_id);
+
+    setToken(res,{_id,role:"scrapCollector"});
 
     res.json({ msg: 'Logged in successfully', userId: scrapCollector._id });
   } catch (error) {
@@ -51,7 +64,7 @@ export const loginScrapCollector = async (req, res) => {
 
 export const getScrapCollectorProfile = async (req, res) => {
   try {
-    const scrapCollector = await ScrapCollector.findById(req.user.userId).select('-password');
+    const scrapCollector = await ScrapCollector.findOne({ username: req.user.username }).select('-password');
     if (!scrapCollector) {
       return res.status(404).json({ error: 'Scrap collector not found' });
     }

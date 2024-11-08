@@ -8,7 +8,7 @@ const Navbar = () => {
   return (
     <div>       <nav className = 'bg-transparent relative z-10'>
     <div className = 'container mx-auto px-4 py-4 flex justify-between items-center'>
-      <a className = 'text-hite text-2xl font-bold'> <img src="/bg-logo.png" alt="Logo" className="w-28 h-12 mr-2" /></a>
+      <img src="/landing-page/bg-logo.png" alt="Logo" className="w-28 h-12 mr-2" />
       <div className = "hidden lg:flex space-x-6">
         <AnchorLink href = "#vision" className = "text-white hover:text-red-600">The Visionary</AnchorLink>
         <AnchorLink  href = "#evolution" className = "text-white hover:text-red-600">Evolution of Recyling</AnchorLink>
