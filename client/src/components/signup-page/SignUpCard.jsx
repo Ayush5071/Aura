@@ -40,6 +40,9 @@ const SignupCard = () => {
     <div className="flex flex-col justify-center items-center min-h-screen bg-[url('C:\Users\asus\.vscode\Aura\client\public\d8100b4b-898a-4909-a4a0-3c1aa9cfc694.jpg')] relative  w-full bg-cover h-screen">
         <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
       <div className="form-container h-110  my-20 w-3/5 md:w-1/4 lg:w-1/3 p-10 bg-gradient-to-b from-gray-800 to-black shadow-lg rounded-lg transition duration-300 hover:shadow-xl border-2 border-yellow-500 flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center min-h-screen bg-gray-900">
+        <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
+      <div className="form-container h-128 mx-auto my-20 w-4/5 md:w-2/3 lg:w-1/2 p-10 bg-gradient-to-b from-gray-800 to-black shadow-lg rounded-lg transition duration-300 hover:shadow-xl border-2 border-yellow-500 flex flex-col justify-center items-center">
         <h1 className="text-center text-5xl py-10 font-bold text-yellow-400 tracking-widest font-sans">
           SIGN UP FOR TEAM AURA
         </h1>
