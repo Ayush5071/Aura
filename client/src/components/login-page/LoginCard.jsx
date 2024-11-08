@@ -3,7 +3,13 @@ import axios from "axios";
 import { useUser } from "../../lib/userContext.jsx";
 import { ToastContainer, toast} from "react-toastify";
 import "react-toastify/ReactToastify.css"
+
+import { Link, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+
 import { Link } from "react-router-dom";
+
 const LoginCard = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -34,6 +40,12 @@ const LoginCard = () => {
       }
       
     }
+      
+  return (
+    <div className="flex flex-col justify-center items-center min-h-screen bg-[url('C:\Users\asus\.vscode\Aura\client\public\d8100b4b-898a-4909-a4a0-3c1aa9cfc694.jpg')] relative  w-full bg-cover h-screen">
+            <ToastContainer position="top-right" autoClose={1000} hideProgressBar={false} />
+
+      <div className="form-container h-128 mx-auto my-20 w-3/5 md:w-2/3 lg:w-1/4 p-10 bg-gradient-to-b from-gray-800 to-black shadow-lg rounded-lg transition duration-300 hover:shadow-xl border-2 border-yellow-500 flex flex-col justify-center items-center">
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen bg-gray-900">
