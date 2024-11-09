@@ -26,7 +26,11 @@ const UserSchema = new mongoose.Schema({
   },
   address: {
     type: String,
-  }
+  },
+  mySchedules: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'PickupSchedule',
+  }]
 }, { timestamps: true });
 
 UserSchema.pre('save', async function (next) {

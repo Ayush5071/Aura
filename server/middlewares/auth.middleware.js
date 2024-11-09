@@ -3,8 +3,9 @@ import User from '../models/user.models.js';
 import ScrapCollector from '../models/scrapCollector.models.js';
 
 export const isAuthenticated = (req, res, next) => {
-    const token = req.cookies.token;
-
+    console.log("token hinhi mila");
+    const token = req.cookies?.token || req.header("Authorization")?.replace("Bearer "," "); 
+    
     if (!token) {
         return res.status(401).json({ error: 'Not authenticated, token missing' });
     }
@@ -15,7 +16,10 @@ export const isAuthenticated = (req, res, next) => {
             userId: decoded.userId,
             role: decoded.role
         };
-        console.log("scrap collector ki id ->",req.user.userId)
+
+        console.log("Scrap collector userId ->", req.user.userId);
+        console.log("Scrap collector role ->", req.user.role);
+
         next();
     } catch (error) {
         return res.status(401).json({ error: 'Invalid or expired token' });

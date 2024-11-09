@@ -7,7 +7,7 @@ export const registerScrapCollector = async (req, res) => {
   try {
     let scrapCollector = await ScrapCollector.findOne({ email });
     if (scrapCollector) {
-      return res.status(400).json({ error: 'ScrapCollector exists' });
+      return res.status(400).json({ success: false, error: 'ScrapCollector already exists' });
     }
 
     scrapCollector = new ScrapCollector({
@@ -20,45 +20,37 @@ export const registerScrapCollector = async (req, res) => {
 
     await scrapCollector.save();
 
-     const _id = scrapCollector._id;
+    const { _id } = scrapCollector;
 
-     console.log("ye gya h set token me ->",_id)
+    setToken(res, { _id, role: "scrapCollector" });
 
-    setToken(res,{_id,role:"scrapCollector"});
-
-    res.status(201).json({ msg: 'Scrapcollector registered successfully', userId: scrapCollector._id });
+    res.status(201).json({ success: true, message: 'Scrap collector registered successfully', userId: _id });
   } catch (error) {
-    res.status(500).json({ error: 'Server error', error });
+    res.status(500).json({ success: false, error: 'Server error', message: error.message });
   }
 };
 
 export const loginScrapCollector = async (req, res) => {
   const { email, password } = req.body;
-//   console.log("login -- ",email)
 
   try {
     const scrapCollector = await ScrapCollector.findOne({ email });
-    console.log("login --",scrapCollector);
     if (!scrapCollector) {
-      return res.status(400).json({ error: 'Invalid credentials' });
+      return res.status(400).json({ success: false, error: 'Invalid credentials' });
     }
-    
-    console.log("yaha tk shi h");
 
     const isMatch = await scrapCollector.matchPassword(password);
     if (!isMatch) {
-      return res.status(400).json({ error: 'Invalid credentials' });
+      return res.status(400).json({ success: false, error: 'Invalid credentials' });
     }
 
-    const {_id} = scrapCollector;
+    const { _id } = scrapCollector;
 
-    console.log("id check -->",_id);
+    setToken(res, { _id, role: "scrapCollector" });
 
-    setToken(res,{_id,role:"scrapCollector"});
-
-    res.json({ msg: 'Logged in successfully', userId: scrapCollector._id });
+    res.json({ success: true, message: 'Logged in successfully', userId: _id });
   } catch (error) {
-    res.status(500).json({ error: 'Server error', error });
+    res.status(500).json({ success: false, error: 'Server error', message: error.message });
   }
 };
 
@@ -66,20 +58,20 @@ export const getScrapCollectorProfile = async (req, res) => {
   try {
     const scrapCollector = await ScrapCollector.findOne({ username: req.user.username }).select('-password');
     if (!scrapCollector) {
-      return res.status(404).json({ error: 'Scrap collector not found' });
+      return res.status(404).json({ success: false, error: 'Scrap collector not found' });
     }
 
-    res.json(scrapCollector);
+    res.json({ success: true, scrapCollector });
   } catch (error) {
-    res.status(500).json({ error: 'Server error', error });
+    res.status(500).json({ success: false, error: 'Server error', message: error.message });
   }
 };
 
 export const logoutScrapCollector = async (req, res) => {
   try {
     res.clearCookie('token');
-    res.json({ msg: 'Logged out successfully' });
+    res.json({ success: true, message: 'Logged out successfully' });
   } catch (error) {
-    res.status(500).json({ error: 'Server error', error });
+    res.status(500).json({ success: false, error: 'Server error', message: error.message });
   }
 };

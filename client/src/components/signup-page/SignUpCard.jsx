@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; 
 import axios from "axios";
-import { ToastContainer, toast} from "react-toastify";
-import "react-toastify/ReactToastify.css"
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/ReactToastify.css";
+
 const SignupCard = () => {
   const [name, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -16,29 +17,33 @@ const SignupCard = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password != confirmPassword) {
-      toast.error("Passwords do not match!")
-      return 
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match!");
+      return;
     }
     try {
       const response = await axios.post(`http://localhost:4000/api/user/register`, {
         name, email, password
-      })
-      console.log(response.data);
-      toast.success("Signup Successful! Redirecting...");
+      });
 
-      setTimeout(() => {
-        navigate("/login");
-      }, 1500);
+      if (response.data.success) {
+        toast.success("Signup Successful! Redirecting...");
+        setTimeout(() => {
+          navigate("/customer/dashboard");
+        }, 1500);
+      } else {
+        toast.error(response.data.error || "Signup failed, please try again.");
+      }
     } catch (error) {
-      console.error(error.response ? error.response.data.error: error.message);
-      toast.error(error.response.data.error || "SIGNUP FAILED, please try again")
+      console.error(error.response ? error.response.data.error : error.message);
+      toast.error(error.response?.data?.error || "Signup failed, please try again.");
     }
   };
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen bg-gray-900">
-        <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
+
       <div className="form-container h-128 mx-auto my-20 w-4/5 md:w-2/3 lg:w-1/2 p-10 bg-gradient-to-b from-gray-800 to-black shadow-lg rounded-lg transition duration-300 hover:shadow-xl border-2 border-yellow-500 flex flex-col justify-center items-center">
         <h1 className="text-center text-5xl py-10 font-bold text-yellow-400 tracking-widest font-sans">
           SIGN UP FOR TEAM AURA
@@ -100,7 +105,7 @@ const SignupCard = () => {
         <div className="mt-4 text-gray-300">
           <p>
             Already have an account?{' '}
-            <Link to="/login" className="text-yellow-500 hover:underline">
+            <Link to="/customer/login" className="text-yellow-500 hover:underline">
               Log in
             </Link>
           </p>
