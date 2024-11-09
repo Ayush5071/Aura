@@ -1,6 +1,5 @@
 import ScrapPrice from "../models/scrapPrice.models.js";
 
-
 export const setScrapPrice = async (req, res) => {
   const { type, pricePerKg } = req.body;
 
@@ -15,17 +14,17 @@ export const setScrapPrice = async (req, res) => {
       await scrapPrice.save();
     }
 
-    res.status(200).json({ message: 'Scrap price set successfully', scrapPrice });
+    res.status(200).json({ success: true, message: 'Scrap price set successfully', scrapPrice });
   } catch (error) {
-    res.status(500).json({ error: 'Server error', details: error });
+    res.status(500).json({ success: false, error: 'Server error', message: error.message });
   }
 };
 
 export const getScrapPrices = async (req, res) => {
   try {
     const scrapPrices = await ScrapPrice.find();
-    res.status(200).json(scrapPrices);
+    res.status(200).json({ success: true, scrapPrices });
   } catch (error) {
-    res.status(500).json({ error: 'Server error', details: error });
+    res.status(500).json({ success: false, error: 'Server error', message: error.message });
   }
 };

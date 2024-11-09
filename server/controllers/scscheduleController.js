@@ -8,7 +8,7 @@ export const acceptPickupRequest = async (req, res) => {
   try {
     const request = await PickupSchedule.findOne({ _id: requestId, status: 'pending' });
     if (!request) {
-      return res.status(404).json({ error: 'Request not found or already processed' });
+      return res.status(404).json({ success: false, error: 'Request not found or already processed' });
     }
 
     request.status = 'accepted';
@@ -17,9 +17,9 @@ export const acceptPickupRequest = async (req, res) => {
 
     await ScrapCollector.findByIdAndUpdate(userId, { $push: { assignedPickups: requestId } });
 
-    res.json({ message: 'Request accepted successfully', request });
+    res.json({ success: true, message: 'Request accepted successfully', request });
   } catch (error) {
-    res.status(500).json({ error: 'Server error', error });
+    res.status(500).json({ success: false, error: 'Server error', message: error.message });
   }
 };
 
@@ -30,9 +30,9 @@ export const getAcceptedRequests = async (req, res) => {
     const requests = await PickupSchedule.find({ collectorId: userId, status: 'accepted' })
       .populate('customerId', 'name contactNumber')
       .populate('collectorId', 'name contactNumber');
-    res.json(requests);
+    res.json({ success: true, requests });
   } catch (error) {
-    res.status(500).json({ error: 'Server error', error });
+    res.status(500).json({ success: false, error: 'Server error', message: error.message });
   }
 };
 
@@ -43,9 +43,9 @@ export const getRequestsByStatus = async (req, res) => {
     const requests = await PickupSchedule.find({ status })
       .populate('customerId', 'name contactNumber')
       .populate('collectorId', 'name contactNumber');
-    res.json(requests);
+    res.json({ success: true, requests });
   } catch (error) {
-    res.status(500).json({ error: 'Server error', error });
+    res.status(500).json({ success: false, error: 'Server error', message: error.message });
   }
 };
 
@@ -57,7 +57,7 @@ export const updateRequestStatus = async (req, res) => {
   try {
     const request = await PickupSchedule.findOne({ _id: requestId, collectorId: userId });
     if (!request) {
-      return res.status(404).json({ error: 'Request not found' });
+      return res.status(404).json({ success: false, error: 'Request not found' });
     }
 
     request.status = status;
@@ -70,8 +70,8 @@ export const updateRequestStatus = async (req, res) => {
       });
     }
 
-    res.json({ message: 'Status updated successfully', request });
+    res.json({ success: true, message: 'Status updated successfully', request });
   } catch (error) {
-    res.status(500).json({ error: 'Server error', error });
+    res.status(500).json({ success: false, error: 'Server error', message: error.message });
   }
 };
