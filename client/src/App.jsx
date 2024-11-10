@@ -1,29 +1,46 @@
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Landing from './pages/Landing.jsx';
 import Login from './pages/Login.jsx';
-import SignUp from "./pages/Signup.jsx"
-import { UserProvider } from './lib/userContext.jsx';
-
-import DBUser from './components/dashboard-page/DBUser.jsx';
-import DBScrapCollector from './components/dashboard-page/DBScrapCollector.jsx';
+import SignUp from './pages/Signup.jsx';
+import ScrapCollectorDashboard from './pages/ScrapCollector/Dashboard.jsx';
+import CustomerDashboard from './pages/customer/Dashboard.jsx';
 
 const App = () => {
   return (
-    <UserProvider>
-    <Router>
+
+<Router>
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp/>} />
 
-        <Route path = "/dashboard" element = {<DBUser/>} />
-        <Route path = "/dashboard/collector" element = {<DBScrapCollector/>} />
-        
+        {/* Routes for Customer */}
+        <Route path="/customer">
+          <Route path="login" element={<Login />} />
+          <Route path="signup" element={<SignUp />} />
+          <Route path="dashboard" element={<CustomerDashboard/>} />
+          {/* <Route path="profile" element={<CustomerProfile />} /> */}
+        </Route>
 
+        {/* Routes for Scrap Collector */}
+        <Route path="/scrapcollector">
+          <Route path="login" element={<Login />} />
+          <Route path="signup" element={<SignUp />} />
+          <Route path="dashboard" element={<ScrapCollectorDashboard />} />
+          {/* <Route path="profile" element={<ScrapCollectorProfile />} /> */}
+        </Route>
       </Routes>
     </Router>
-    </UserProvider>
   );
 };
 
 export default App;
+
+// Customer Routes:
+// /customer/login: Login page for customers.
+// /customer/signup: Sign-up page for customers.
+// /customer/dashboard: Dashboard for customers.
+// /customer/profile: Profile page for customers.
+// Scrap Collector Routes:
+// /scrapcollector/login: Login page for scrap collectors.
+// /scrapcollector/signup: Sign-up page for scrap collectors.
+// /scrapcollector/dashboard: Dashboard for scrap collectors.
+// /scrapcollector/profile: Profile page for scrap collectors.

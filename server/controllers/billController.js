@@ -1,19 +1,15 @@
-
 import Bill from '../models/bill.models.js';
 import PickupSchedule from '../models/pickupSchedule.models.js';
 import ScrapPrice from '../models/scrapPrice.models.js';
 
-
 export const createBill = async (req, res) => {
   const { requestId } = req.body;
   const { userId } = req.user;
-  console.log("yha ya ")
 
   try {
     const request = await PickupSchedule.findById(requestId).populate('customerId');
-    console.log(request);
     if (!request || request.status !== 'completed') {
-      return res.status(404).json({ error: 'Request not found or not completed' });
+      return res.status(404).json({ success: false, error: 'Request not found or not completed' });
     }
 
     const scrapDetails = await Promise.all(request.scrapDetails.map(async (scrap) => {
@@ -26,7 +22,6 @@ export const createBill = async (req, res) => {
         amount,
       };
     }));
-    console.log("yooooooooo")
 
     const totalAmount = scrapDetails.reduce((sum, item) => sum + item.amount, 0);
 
@@ -38,9 +33,9 @@ export const createBill = async (req, res) => {
     });
 
     await bill.save();
-    res.status(201).json({ message: 'Bill created successfully', bill });
+    res.status(201).json({ success: true, message: 'Bill created successfully', bill });
   } catch (error) {
-    res.status(500).json({ error: 'Server error', error });
+    res.status(500).json({ success: false, error: 'Server error', message: error.message });
   }
 };
 
@@ -50,20 +45,20 @@ export const getBillById = async (req, res) => {
   try {
     const bill = await Bill.findById(id).populate('customerId').populate('collectorId');
     if (!bill) {
-      return res.status(404).json({ error: 'Bill not found' });
+      return res.status(404).json({ success: false, error: 'Bill not found' });
     }
-    res.json(bill);
+    res.json({ success: true, bill });
   } catch (error) {
-    res.status(500).json({ error: 'Server error', error });
+    res.status(500).json({ success: false, error: 'Server error', message: error.message });
   }
 };
 
 export const getAllBills = async (req, res) => {
   try {
     const bills = await Bill.find().populate('customerId').populate('collectorId');
-    res.json(bills);
+    res.json({ success: true, bills });
   } catch (error) {
-    res.status(500).json({ error: 'Server error', error });
+    res.status(500).json({ success: false, error: 'Server error', message: error.message });
   }
 };
 
@@ -71,10 +66,10 @@ export const getBillsByCustomerId = async (req, res) => {
   const { userId } = req.user;
 
   try {
-    const bills = await Bill.find({ customerId:userId }).populate('customerId').populate('collectorId');
-    res.json(bills);
+    const bills = await Bill.find({ customerId: userId }).populate('customerId').populate('collectorId');
+    res.json({ success: true, bills });
   } catch (error) {
-    res.status(500).json({ error: 'Server error', error });
+    res.status(500).json({ success: false, error: 'Server error', message: error.message });
   }
 };
 
@@ -82,9 +77,9 @@ export const getBillsByCollectorId = async (req, res) => {
   const { userId } = req.user;
 
   try {
-    const bills = await Bill.find({ collectorId:userId }).populate('customerId').populate('collectorId');
-    res.json(bills);
+    const bills = await Bill.find({ collectorId: userId }).populate('customerId').populate('collectorId');
+    res.json({ success: true, bills });
   } catch (error) {
-    res.status(500).json({ error: 'Server error', error });
+    res.status(500).json({ success: false, error: 'Server error', message: error.message });
   }
 };
