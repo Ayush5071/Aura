@@ -17,7 +17,6 @@ const App = () => {
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />} />
           <Route path="dashboard" element={<CustomerDashboard/>} />
-          {/* <Route path="profile" element={<CustomerProfile />} /> */}
         </Route>
 
         {/* Routes for Scrap Collector */}
@@ -25,7 +24,7 @@ const App = () => {
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />} />
           <Route path="dashboard" element={<ScrapCollectorDashboard />} />
-          {/* <Route path="profile" element={<ScrapCollectorProfile />} /> */}
+
         </Route>
       </Routes>
     </Router>

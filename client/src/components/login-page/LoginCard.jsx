@@ -22,7 +22,7 @@ const LoginCard = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        credentials: 'include', // This is equivalent to axios's withCredentials: true
+        credentials: 'include', 
         body: JSON.stringify({
           email: username,
           password
