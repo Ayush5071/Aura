@@ -1,7 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Landing from './pages/Landing.jsx';
-import Login from './pages/Login.jsx';
-import SignUp from './pages/Signup.jsx';
+import UserLogin from './pages/customer-auth/Login.jsx';
+import UserSignup from './pages/customer-auth/Signup.jsx';
+import ScrapLogin from './pages/scrapcollector-auth/Login.jsx';
+import ScrapSignup from './pages/scrapcollector-auth/Signup.jsx';
 import ScrapCollectorDashboard from './pages/ScrapCollector/Dashboard.jsx';
 import CustomerDashboard from './pages/customer/Dashboard.jsx';
 
@@ -14,15 +16,15 @@ const App = () => {
 
         {/* Routes for Customer */}
         <Route path="/customer">
-          <Route path="login" element={<Login />} />
-          <Route path="signup" element={<SignUp />} />
+          <Route path="login" element={<UserLogin />} />
+          <Route path="signup" element={<UserSignup />} />
           <Route path="dashboard" element={<CustomerDashboard/>} />
         </Route>
 
         {/* Routes for Scrap Collector */}
         <Route path="/scrapcollector">
-          <Route path="login" element={<Login />} />
-          <Route path="signup" element={<SignUp />} />
+          <Route path="login" element={<ScrapLogin />} />
+          <Route path="signup" element={<ScrapSignup />} />
           <Route path="dashboard" element={<ScrapCollectorDashboard />} />
 
         </Route>
