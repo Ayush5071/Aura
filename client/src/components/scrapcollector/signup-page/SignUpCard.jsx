@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; 
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/ReactToastify.css";
+import "react-toastify/dist/ReactToastify.css";
 
 const SignupCard = () => {
   const [name, setUsername] = useState('');
@@ -22,14 +22,14 @@ const SignupCard = () => {
       return;
     }
     try {
-      const response = await axios.post(`http://localhost:4000/api/user/register`, {
+      const response = await axios.post(`http://localhost:4000/api/scrapcollector/register`, {
         name, email, password
       });
 
       if (response.data.success) {
         toast.success("Signup Successful! Redirecting...");
         setTimeout(() => {
-          navigate("/customer/dashboard");
+          navigate("/scrapcollector/dashboard");
         }, 1500);
       } else {
         toast.error(response.data.error || "Signup failed, please try again.");
@@ -41,25 +41,22 @@ const SignupCard = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen bg-[url('C:\Users\asus\.vscode\Aura\client\public\d8100b4b-898a-4909-a4a0-3c1aa9cfc694.jpg')] relative  w-full bg-cover h-screen">
-        <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
-      <div className="form-container h-110  my-20 w-3/5 md:w-1/4 lg:w-1/3 p-10 bg-gradient-to-b from-gray-800 to-black shadow-lg rounded-lg transition duration-300 hover:shadow-xl border-2 border-yellow-500 flex flex-col justify-center items-center">
-    <div className="flex flex-col justify-center items-center min-h-screen bg-gray-900">
+    <div className="flex flex-col justify-center items-center min-h-screen bg-cover bg-[url('/auth-bg.jpg')]">
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
-
+      
       <div className="form-container h-128 mx-auto my-20 w-4/5 md:w-2/3 lg:w-1/2 p-10 bg-gradient-to-b from-gray-800 to-black shadow-lg rounded-lg transition duration-300 hover:shadow-xl border-2 border-yellow-500 flex flex-col justify-center items-center">
         <h1 className="text-center text-5xl py-10 font-bold text-yellow-400 tracking-widest font-sans">
           SIGN UP FOR TEAM AURA
         </h1>
         
-        <form className='flex flex-col justify-center w-full' onSubmit={handleSubmit}>
+        <form className="flex flex-col justify-center w-full" onSubmit={handleSubmit}>
           <div className="relative mb-4">
             <input
               type="text"
               placeholder="Username"
               value={name}
               onChange={(e) => handleInputChange(e, setUsername)}
-              className="w-full p-3 bg-gray-900 text-white rounded-md focus:ring-2 focus:ring-yellow-500 transition duration-200 ease-in-out hover:bg-gray-800 shadow-md hover:shadow-lg glow-input typing"
+              className="w-full p-3 bg-gray-900 text-white rounded-md focus:ring-2 focus:ring-yellow-500 transition duration-200 ease-in-out hover:bg-gray-800 shadow-md hover:shadow-lg"
               autoComplete="off"
             />
           </div>
@@ -70,7 +67,7 @@ const SignupCard = () => {
               placeholder="Email"
               value={email}
               onChange={(e) => handleInputChange(e, setEmail)}
-              className="w-full p-3 bg-gray-900 text-white rounded-md focus:ring-2 focus:ring-yellow-500 transition duration-200 ease-in-out hover:bg-gray-800 shadow-md hover:shadow-lg glow-input typing"
+              className="w-full p-3 bg-gray-900 text-white rounded-md focus:ring-2 focus:ring-yellow-500 transition duration-200 ease-in-out hover:bg-gray-800 shadow-md hover:shadow-lg"
               autoComplete="off"
             />
           </div>
@@ -81,7 +78,7 @@ const SignupCard = () => {
               placeholder="Password"
               value={password}
               onChange={(e) => handleInputChange(e, setPassword)}
-              className="w-full p-3 bg-gray-900 text-white rounded-md focus:ring-2 focus:ring-yellow-500 transition duration-200 ease-in-out hover:bg-gray-800 shadow-md hover:shadow-lg glow-input typing"
+              className="w-full p-3 bg-gray-900 text-white rounded-md focus:ring-2 focus:ring-yellow-500 transition duration-200 ease-in-out hover:bg-gray-800 shadow-md hover:shadow-lg"
               autoComplete="off"
             />
           </div>
@@ -92,7 +89,7 @@ const SignupCard = () => {
               placeholder="Confirm Password"
               value={confirmPassword}
               onChange={(e) => handleInputChange(e, setConfirmPassword)}
-              className="w-full p-3 bg-gray-900 text-white rounded-md focus:ring-2 focus:ring-yellow-500 transition duration-200 ease-in-out hover:bg-gray-800 shadow-md hover:shadow-lg glow-input typing"
+              className="w-full p-3 bg-gray-900 text-white rounded-md focus:ring-2 focus:ring-yellow-500 transition duration-200 ease-in-out hover:bg-gray-800 shadow-md hover:shadow-lg"
               autoComplete="off"
             />
           </div>
@@ -108,7 +105,7 @@ const SignupCard = () => {
         <div className="mt-4 text-gray-300">
           <p>
             Already have an account?{' '}
-            <Link to="/customer/login" className="text-yellow-500 hover:underline">
+            <Link to="/scrapcollector/login" className="text-yellow-500 hover:underline">
               Log in
             </Link>
           </p>

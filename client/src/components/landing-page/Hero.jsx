@@ -5,8 +5,11 @@ import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
   const navigate = useNavigate();
-  const handleLoginClick = () =>{
-    navigate("/signup");
+  const handleUserSignupClick = () =>{
+    navigate("/customer/signup");
+  }
+  const handleScrapLoginClick = () =>{
+    navigate("/scrapcollector/login");
   }
 
   return (
@@ -25,7 +28,9 @@ const Hero = () => {
         <span className="font-semibold text-yellow-400"> Discover how you can be a hero in this monumental shift!</span>
     </p>
     <div className ='flex  gap-4 '>
-    <Enter text='Join the Sustainability Squad' icon = '🌍'onClick={handleLoginClick}/>
+    <Enter text='Sign Up as Customer' icon = '🌍'onClick={handleUserSignupClick}/>
+    <Enter text='Login as Scrap Collector' icon = '🌍' onClick={handleScrapLoginClick}/>
+
     </div>
 </div>
 
