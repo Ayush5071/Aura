@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 // import MyRequests from './MyRequests';
 // import Settings from './Settings';
 import Sidebar from '../../components/SCDashboard/Sidebar';
-import Navbar from '../../components/landing-page/Navbar';
+import Navbar from '../../components/SCDashboard/Navbar';
 
 const ScrapCollectorDashboard = () => {
   const [activeComponent, setActiveComponent] = useState('profile');
@@ -16,7 +16,6 @@ const ScrapCollectorDashboard = () => {
   return (
     <div className="flex h-screen">
       <div className="w-[18vw] bg-gray-800 text-white h-full">
-        <Navbar />
         <Sidebar onLinkClick={handleLinkClick} />
       </div>
 

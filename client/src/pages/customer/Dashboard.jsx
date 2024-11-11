@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import Sidebar from '../../components/SCDashboard/Sidebar';
-import Navbar from '../../components/landing-page/Navbar';
+import Navbar from '../../components/UserDashboard/Navbar';
 import Profile from '../../components/UserDashboard/Profile';
 
 const CustomerDashboard = () => {
@@ -12,13 +12,12 @@ const CustomerDashboard = () => {
 
   return (
     <div className="flex h-screen">
-      <div className="w-[18vw] bg-gray-800 text-white h-full">
-        <Navbar />
+      <div className="w-[18vw]  bg-gray-800 text-white h-full">
         <Sidebar onLinkClick={handleLinkClick} />
       </div>
 
       <div className="flex-1 bg-gray-100 overflow-auto" style={{ width: '82vw' }}>
-        <Navbar />
+        <Navbar/>
         <div className="p-6">
           {activeComponent === 'profile' && <Profile/>}
           {activeComponent === 'requests' && <div>Requests Section</div>}

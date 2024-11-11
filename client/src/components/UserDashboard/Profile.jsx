@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import  { useEffect } from "react";
 import { useUser } from "../../lib/userContext";
 
 const Profile = () => {
