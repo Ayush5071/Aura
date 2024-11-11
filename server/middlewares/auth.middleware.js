@@ -5,6 +5,8 @@ import ScrapCollector from '../models/scrapCollector.models.js';
 export const isAuthenticated = (req, res, next) => {
     console.log("token hinhi mila");
     const token = req.cookies?.token || req.header("Authorization")?.replace("Bearer "," "); 
+
+    console.log(token, "hai token ?");
     
     if (!token) {
         return res.status(401).json({ error: 'Not authenticated, token missing' });

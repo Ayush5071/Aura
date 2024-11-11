@@ -6,13 +6,12 @@ export const setToken = (res, { _id, role }) => {
     });
 
     console.log("token hai ?",token);
-
     res.cookie('token', token, {
-        httpOnly: true, 
-        secure: false, 
-        maxAge: 60 * 60 * 1000, 
-        sameSite: 'None', 
-    });
-
+        httpOnly: false, // Temporarily set to false for debugging
+        secure: false, // Disable for local development
+        maxAge: 3600000,
+        path: '/',
+      });
+      
     console.log("Set-Cookie Header:", res.getHeaders()['set-cookie']);
 };

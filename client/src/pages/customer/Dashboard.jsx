@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
-import Sidebar from '../../components/SCDashboard/Sidebar';
+import Sidebar from '../../components/UserDashboard/Sidebar';
 import Navbar from '../../components/landing-page/Navbar';
 import Profile from '../../components/UserDashboard/Profile';
+import CreateRequest from '../../components/UserDashboard/CreateRequest';
+import AllRequests from '../../components/UserDashboard/AllRequests';
+import Settings from '../../components/UserDashboard/Settings';
+// import { useUser } from '../../context/userContext';
+
 
 const CustomerDashboard = () => {
   const [activeComponent, setActiveComponent] = useState('');
+  // const { user } = useUser();
 
   const handleLinkClick = (component) => {
     setActiveComponent(component);
   };
+
+  // console.log(user,"user aa rha hai ?");
 
   return (
     <div className="flex h-screen">
@@ -21,9 +29,9 @@ const CustomerDashboard = () => {
         <Navbar />
         <div className="p-6">
           {activeComponent === 'profile' && <Profile/>}
-          {activeComponent === 'requests' && <div>Requests Section</div>}
-          {activeComponent === 'myrequests' && <div>My Requests Section</div>}
-          {activeComponent === 'settings' && <div>Settings Section</div>}
+          {activeComponent === 'requests' && <CreateRequest/>}
+          {activeComponent === 'myrequests' && <AllRequests/>}
+          {activeComponent === 'settings' && <Settings/>}
         </div>
       </div>
     </div>
