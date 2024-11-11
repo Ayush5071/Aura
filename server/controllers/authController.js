@@ -1,6 +1,6 @@
-import jwt from 'jsonwebtoken';
-import User from '../models/user.models.js';
-import { setToken } from '../helper/setToken.js';
+import jwt from "jsonwebtoken";
+import User from "../models/user.models.js";
+import { setToken } from "../helper/setToken.js";
 
 export const registerUser = async (req, res) => {
   const { name, email, password, contactNumber } = req.body;
@@ -8,7 +8,9 @@ export const registerUser = async (req, res) => {
   try {
     let user = await User.findOne({ email });
     if (user) {
-      return res.status(400).json({ success: false, error: 'User already exists' });
+      return res
+        .status(400)
+        .json({ success: false, error: "User already exists" });
     }
 
     user = new User({
@@ -24,9 +26,13 @@ export const registerUser = async (req, res) => {
 
     setToken(res, { _id, role });
 
-    res.status(201).json({ success: true, message: 'User registered successfully', user });
+    res
+      .status(201)
+      .json({ success: true, message: "User registered successfully", user });
   } catch (error) {
-    res.status(500).json({ success: false, error: 'Server error', message: error.message });
+    res
+      .status(500)
+      .json({ success: false, error: "Server error", message: error.message });
   }
 };
 
@@ -37,52 +43,61 @@ export const loginUser = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(400).json({ success: false, error: 'Invalid credentials' });
+      return res
+        .status(400)
+        .json({ success: false, error: "Invalid credentials" });
     }
 
-    console.log("user aa gya",user)
+    console.log("user aa gya", user);
 
     const isMatch = await user.matchPassword(password);
 
     if (!isMatch) {
-      return res.status(400).json({ success: false, error: 'Invalid credentials' });
+      return res
+        .status(400)
+        .json({ success: false, error: "Invalid credentials" });
     }
-    console.log(isMatch,"milahu")
+    console.log(isMatch, "milahu");
 
     const { _id, role } = user;
 
-    console.log(_id,role , "sayd issue h");
+    console.log(_id, role, "sayd issue h");
 
     setToken(res, { _id, role });
-    
-    res.json({ success: true, message: 'Logged in successfully', user });
+
+    res.json({ success: true, message: "Logged in successfully", user });
   } catch (error) {
-    res.status(500).json({ success: false, error: 'Serv error', message: error.message });
+    res
+      .status(500)
+      .json({ success: false, error: "Serv error", message: error.message });
   }
 };
 
 export const getProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.userId)
-      .select('-password')
-      .populate('mySchedules');
+      .select("-password")
+      .populate("mySchedules");
 
     if (!user) {
-      return res.status(404).json({ success: false, error: 'User not found' });
+      return res.status(404).json({ success: false, error: "User not found" });
     }
 
     res.json({ success: true, user });
   } catch (error) {
-    res.status(500).json({ success: false, error: 'Server error', message: error.message });
+    res
+      .status(500)
+      .json({ success: false, error: "Server error", message: error.message });
   }
 };
 
-
 export const logoutUser = async (req, res) => {
   try {
-    res.clearCookie('token');
-    res.json({ success: true, message: 'Logged out successfully' });
+    res.clearCookie("token");
+    res.json({ success: true, message: "Logged out successfully" });
   } catch (error) {
-    res.status(500).json({ success: false, error: 'Server error', message: error.message });
+    res
+      .status(500)
+      .json({ success: false, error: "Server error", message: error.message });
   }
 };
