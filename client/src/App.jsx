@@ -2,10 +2,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Landing from './pages/Landing.jsx';
 import UserLogin from './pages/customer-auth/Login.jsx';
 import UserSignup from './pages/customer-auth/Signup.jsx';
-import ScrapLogin from './pages/scrapcollector-auth/Login.jsx';
-import ScrapSignup from './pages/scrapcollector-auth/Signup.jsx';
+import ScrapLogin from './pages/ScrapCollector/Login.jsx';
 import ScrapCollectorDashboard from './pages/ScrapCollector/Dashboard.jsx';
 import CustomerDashboard from './pages/customer/Dashboard.jsx';
+import SignupCard from './pages/ScrapCollector/SignUpCard.jsx';
 
 const App = () => {
   return (
@@ -24,7 +24,7 @@ const App = () => {
         {/* Routes for Scrap Collector */}
         <Route path="/scrapcollector">
           <Route path="login" element={<ScrapLogin />} />
-          <Route path="signup" element={<ScrapSignup />} />
+          <Route path="signup" element={<SignupCard />} />
           <Route path="dashboard" element={<ScrapCollectorDashboard />} />
 
         </Route>
@@ -34,14 +34,3 @@ const App = () => {
 };
 
 export default App;
-
-// Customer Routes:
-// /customer/login: Login page for customers.
-// /customer/signup: Sign-up page for customers.
-// /customer/dashboard: Dashboard for customers.
-// /customer/profile: Profile page for customers.
-// Scrap Collector Routes:
-// /scrapcollector/login: Login page for scrap collectors.
-// /scrapcollector/signup: Sign-up page for scrap collectors.
-// /scrapcollector/dashboard: Dashboard for scrap collectors.
-// /scrapcollector/profile: Profile page for scrap collectors.

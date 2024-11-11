@@ -1,14 +1,16 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; 
-import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Link, useNavigate } from "react-router-dom"; // Use useNavigate for redirection
+import axios from "axios";
+import { useScrapCollector } from "../../context/scrapcollectorContext";
 
 const SignupCard = () => {
-  const [name, setUsername] = useState('');
+  const [name, setName] = useState('');  // Corrected username to name for consistency
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const { loginScrapCollector } = useScrapCollector();  // Use loginScrapCollector from context
   const navigate = useNavigate();
 
   const handleInputChange = (e, setState) => {
@@ -17,17 +19,28 @@ const SignupCard = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (password !== confirmPassword) {
       toast.error("Passwords do not match!");
       return;
     }
+
     try {
-      const response = await axios.post(`http://localhost:4000/api/scrapcollector/register`, {
-        name, email, password
+      const response = await axios.post('http://localhost:4000/api/scrapcollector/register', {
+        name,
+        email,
+        password
       });
 
+      console.log(response,"afte rignup");
+
+
       if (response.data.success) {
+        // Successfully registered, log the user in and redirect
+        loginScrapCollector(response.data.user); // Set the user in the context (and possibly cookies)
         toast.success("Signup Successful! Redirecting...");
+        
+        // Redirect to the Scrap Collector Dashboard
         setTimeout(() => {
           navigate("/scrapcollector/dashboard");
         }, 1500);
@@ -55,7 +68,7 @@ const SignupCard = () => {
               type="text"
               placeholder="Username"
               value={name}
-              onChange={(e) => handleInputChange(e, setUsername)}
+              onChange={(e) => handleInputChange(e, setName)}  // Corrected setUsername to setName
               className="w-full p-3 bg-gray-900 text-white rounded-md focus:ring-2 focus:ring-yellow-500 transition duration-200 ease-in-out hover:bg-gray-800 shadow-md hover:shadow-lg"
               autoComplete="off"
             />

@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { useUser } from "../../../context/userContext.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/ReactToastify.css";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom"; // Use useNavigate for redirection
+import { useScrapCollector } from "../../context/scrapcollectorContext";
 const LoginCard = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { login } = useUser();
+  const { loginScrapCollector } = useScrapCollector();
+  const navigate = useNavigate(); // For navigation after successful login
 
   const handleInputChange = (e, setState) => {
     setState(e.target.value);
@@ -15,36 +15,42 @@ const LoginCard = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
     try {
       const response = await fetch('http://localhost:4000/api/scrapcollector/login', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        credentials: 'include', // This is equivalent to axios's withCredentials: true
+        credentials: 'include', // Ensure credentials are included
         body: JSON.stringify({
           email: username,
           password
         })
       });
-      
+
+
+      console.log("login done ->",response);
+
       if (!response.ok) {
         throw new Error('Login failed');
       }
-      
+
       const data = await response.json();
-      console.log(data);
-      
 
       if (data) {
-        login(response.data.user);
+        // Call login function from context
+        loginScrapCollector(data.user); 
         toast.success('Login successful!');
+
+        // Redirect to Scrap Collector Dashboard after successful login
+        navigate('/scrapcollector/dashboard');
       } else {
-        toast.error(response.data.error || 'Login failed, please try again.');
+        toast.error('Login failed, please try again.');
       }
     } catch (error) {
-      console.error(error.response ? error.response.data.error : error.message);
-      toast.error(error.response?.data?.error || 'Login failed, please try again.');
+      console.error(error);
+      toast.error(error.message || 'Login failed, please try again.');
     }
   };
 
@@ -57,7 +63,7 @@ const LoginCard = () => {
           JOIN TEAM AURA
         </h1>
 
-        <form onSubmit={handleLogin} className='flex flex-col justify-center w-full'>
+        <form onSubmit={handleLogin} className="flex flex-col justify-center w-full">
           <div className="relative mb-4">
             <input
               type="text"
@@ -90,7 +96,7 @@ const LoginCard = () => {
         <div className="mt-4 text-gray-300">
           <p>
             Don't have an account yet? {' '}
-            <Link to="/customer/signup" className="text-yellow-500 hover:underline">
+            <Link to="/scrapcollector/signup" className="text-yellow-500 hover:underline">
               Sign Up Here
             </Link>
           </p>
