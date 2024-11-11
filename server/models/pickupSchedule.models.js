@@ -6,6 +6,9 @@ const PickupScheduleSchema = new mongoose.Schema({
     ref: 'User',
     required: true,
   },
+  imgUrl:{
+    type:String,
+  },
   collectorId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'ScrapCollector',

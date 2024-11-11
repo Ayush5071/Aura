@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 // import Requests from './Requests';
 // import MyRequests from './MyRequests';
 // import Settings from './Settings';
-import Sidebar from '../../components/SCDashboard/Sidebar';
+import Sidebar from '../../components/UserDashboard/Sidebar';
 import Navbar from '../../components/landing-page/Navbar';
 
 const ScrapCollectorDashboard = () => {
