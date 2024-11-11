@@ -6,7 +6,6 @@ const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
-    // Try to get the user from cookies instead of localStorage
     const storedUser = Cookies.get("user");
     return storedUser ? JSON.parse(storedUser) : null;
   });
@@ -15,7 +14,6 @@ export const UserProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
   const login = (userData) => {
-    // Save the user data in cookies
     setUser(userData);
     Cookies.set("user", JSON.stringify(userData), { expires: 1 }); // expires after 1 day
     fetchProfile();
@@ -23,7 +21,6 @@ export const UserProvider = ({ children }) => {
 
   const logout = () => {
     setUser(null);
-    // Remove the user and token cookies
     Cookies.remove("user");
     Cookies.remove("token");
   };
@@ -38,17 +35,41 @@ export const UserProvider = ({ children }) => {
         return;
       }
 
-      // Set token in axios request headers
       axios.defaults.headers["Authorization"] = `Bearer ${token}`;
 
-      // Fetch the user's profile from the API
       const response = await axios.get("http://localhost:4000/api/user/profile", {
         withCredentials: true,
       });
-      console.log(response.data,"ye hor ha h ?");
       setProfile(response.data);
     } catch (error) {
       console.error("Error fetching profile:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const updateProfile = async (updatedData) => {
+    if (!user) return;
+    setLoading(true);
+    try {
+      const token = Cookies.get("token");
+      if (!token) {
+        console.error("Token is missing in the cookie.");
+        return;
+      }
+
+      axios.defaults.headers["Authorization"] = `Bearer ${token}`;
+
+      const response = await axios.post(
+        "http://localhost:4000/api/user/profile/update",
+        updatedData,
+        { withCredentials: true }
+      );
+
+      // Update the profile in the context
+      setProfile(response.data);
+    } catch (error) {
+      console.error("Error updating profile:", error);
     } finally {
       setLoading(false);
     }
@@ -65,10 +86,10 @@ export const UserProvider = ({ children }) => {
     if (user) {
       fetchProfile();
     }
-  }, []);
+  }, [user]);
 
   return (
-    <UserContext.Provider value={{ user, profile, loading, login, logout, fetchProfile }}>
+    <UserContext.Provider value={{ user, profile, loading, login, logout, fetchProfile, updateProfile }}>
       {children}
     </UserContext.Provider>
   );

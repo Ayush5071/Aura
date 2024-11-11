@@ -30,7 +30,10 @@ const UserSchema = new mongoose.Schema({
   mySchedules: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'PickupSchedule',
-  }]
+  }],
+  image:{
+    type:String,
+  }
 }, { timestamps: true });
 
 UserSchema.pre('save', async function (next) {

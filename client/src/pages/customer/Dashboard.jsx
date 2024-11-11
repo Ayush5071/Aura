@@ -3,6 +3,8 @@ import Sidebar from '../../components/UserDashboard/Sidebar';
 import Navbar from '../../components/landing-page/Navbar';
 import Profile from '../../components/UserDashboard/Profile';
 import CreateRequest from '../../components/UserDashboard/CreateRequest';
+import AllRequests from '../../components/UserDashboard/AllRequests';
+import Settings from '../../components/UserDashboard/Settings';
 // import { useUser } from '../../context/userContext';
 
 
@@ -28,8 +30,8 @@ const CustomerDashboard = () => {
         <div className="p-6">
           {activeComponent === 'profile' && <Profile/>}
           {activeComponent === 'requests' && <CreateRequest/>}
-          {activeComponent === 'myrequests' && <div>My Requests Section</div>}
-          {activeComponent === 'settings' && <div>Settings Section</div>}
+          {activeComponent === 'myrequests' && <AllRequests/>}
+          {activeComponent === 'settings' && <Settings/>}
         </div>
       </div>
     </div>

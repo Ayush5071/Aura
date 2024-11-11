@@ -22,15 +22,25 @@ const CreateRequest = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+  
+    // Log to verify the image and data
+    console.log(image, scrapDetails);
+  
+    // Validate image before sending
+    if (!image) {
+      alert('Please select an image');
+      setLoading(false);
+      return;
+    }
+  
     const formData = new FormData();
     formData.append('pickupDate', pickupDate);
     formData.append('location', location);
-    formData.append('image', image);  // Changed to 'image' for multer compatibility
-    formData.append('scrapDetails', JSON.stringify(scrapDetails));
-
+    formData.append('image', image);  // Attach image file to FormData
+    formData.append('scrapDetails', JSON.stringify(scrapDetails)); // Ensure scrapDetails is a valid JSON string
+  
     try {
-      await createRequest(formData);
+      await createRequest(formData); // Call API to create request
       setPickupDate('');
       setLocation('');
       setScrapDetails([{ weight: '', type: '' }]);
