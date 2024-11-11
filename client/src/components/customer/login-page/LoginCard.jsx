@@ -1,23 +1,29 @@
 import { useState } from "react";
 import axios from "axios";
-import { useUser } from "../../lib/userContext.jsx";
+import { useUser } from "../../../lib/userContext.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/ReactToastify.css";
 import { Link } from "react-router-dom";
 
 const LoginCard = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const { login } = useUser();
-  
-    const handleInputChange = (e, setState) => {
-      setState(e.target.value);
-    };
-    
-    const handleLogin = async (e) => {
-      e.preventDefault();
-      try {
-        const response = await axios.post(`http://localhost:4000/api/user/login`, {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const { login } = useUser();
+
+  const handleInputChange = (e, setState) => {
+    setState(e.target.value);
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('http://localhost:4000/api/user/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include', 
+        body: JSON.stringify({
           email: username,
           password
         })
@@ -44,7 +50,7 @@ const LoginCard = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen bg-gray-900">
+    <div className="flex flex-col justify-center items-center min-h-screen bg-[url('/auth-bg.jpg')] bg-cover">
       <ToastContainer position="top-right" autoClose={1000} hideProgressBar={false} />
 
       <div className="form-container h-128 mx-auto my-20 w-4/5 md:w-2/3 lg:w-1/2 p-10 bg-gradient-to-b from-gray-800 to-black shadow-lg rounded-lg transition duration-300 hover:shadow-xl border-2 border-yellow-500 flex flex-col justify-center items-center">
