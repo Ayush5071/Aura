@@ -4,6 +4,7 @@ import ScrapCollector from '../models/scrapCollector.models.js';
 
 export const isAuthenticated = (req, res, next) => {
     console.log("token hinhi mila");
+    console.log(req.cookies,"cookis to milrhi hai");
     const token = req.cookies?.token || req.header("Authorization")?.replace("Bearer "," "); 
 
     console.log(token, "hai token ?");

@@ -1,5 +1,4 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
-import axios from "axios";
 import Cookies from "js-cookie"; // Import js-cookie for cookie management
 
 const ScrapCollectorContext = createContext();
@@ -19,15 +18,22 @@ export const ScrapCollectorProvider = ({ children }) => {
     setLoading(true);
     setError(null);
 
-    console.log("yecreaddntias hai",credentials);
+    console.log("Credentials are:", credentials);
 
     try {
-      const response = await axios.post(
-        "http://localhost:4000/api/scrapcollector/login",
-        credentials
-      );
-      setScrapCollector(response.data); // Assuming response contains scrap collector data
-      Cookies.set("scrapCollector", JSON.stringify(response.data), { expires: 1 });
+      const response = await fetch("http://localhost:4000/api/scrapcollector/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(credentials),
+      });
+
+      if (!response.ok) throw new Error("Login failed");
+
+      const data = await response.json();
+      setScrapCollector(data); // Assuming response contains scrap collector data
+      Cookies.set("scrapCollector", JSON.stringify(data), { expires: 1 });
       fetchProfile(); // Fetch profile after successful login
     } catch (err) {
       setError("Login failed. Please try again.");
@@ -42,7 +48,16 @@ export const ScrapCollectorProvider = ({ children }) => {
     setError(null);
 
     try {
-      await axios.post("http://localhost:4000/api/scrapcollector/register", data);
+      const response = await fetch("http://localhost:4000/api/scrapcollector/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) throw new Error("Registration failed");
+
       setError(null); // Reset error if registration is successful
     } catch (err) {
       setError("Registration failed. Please try again.");
@@ -63,13 +78,19 @@ export const ScrapCollectorProvider = ({ children }) => {
         return;
       }
 
-      axios.defaults.headers["Authorization"] = `Bearer ${token}`;
-
-      const response = await axios.get("http://localhost:4000/api/scrapcollector/profile", {
-        withCredentials: true,
+      const response = await fetch("http://localhost:4000/api/scrapcollector/profile", {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+        credentials: "include",
       });
-      console.log(response.data,"-> in fetch profile");
-      setProfile(response.data.scrapCollector);
+
+      if (!response.ok) throw new Error("Failed to fetch profile");
+
+      const data = await response.json();
+      console.log(data, "-> in fetch profile");
+      setProfile(data.scrapCollector);
     } catch (err) {
       setError("Failed to fetch profile. Please try again.");
     } finally {
@@ -79,12 +100,23 @@ export const ScrapCollectorProvider = ({ children }) => {
 
   const updateProfile = async (updatedData) => {
     setLoading(true);
+
     try {
-      const response = await axios.post("http://localhost:4000/api/scrapcollector/profile", updatedData); // Replace with actual API
-      setProfile(response.data); // Update local state with new profile data
-      return response.data; // Return updated profile if needed
+      const response = await fetch("http://localhost:4000/api/scrapcollector/profile", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedData),
+      });
+
+      if (!response.ok) throw new Error("Profile update failed");
+
+      const data = await response.json();
+      setProfile(data);
+      return data; 
     } catch (error) {
-      throw new Error('Profile update failed');
+      setError("Profile update failed");
     } finally {
       setLoading(false);
     }
@@ -96,7 +128,16 @@ export const ScrapCollectorProvider = ({ children }) => {
     setError(null);
 
     try {
-      await axios.post("http://localhost:4000/api/scrapcollector/logout", {}, { withCredentials: true });
+      const response = await fetch("http://localhost:4000/api/scrapcollector/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+
+      if (!response.ok) throw new Error("Logout failed");
+
       setScrapCollector(null);
       setProfile(null);
       Cookies.remove("scrapCollector");

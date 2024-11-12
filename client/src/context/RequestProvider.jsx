@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import axios from "axios";
 
 const RequestContext = createContext();
 
@@ -11,8 +10,13 @@ export const RequestProvider = ({ children }) => {
   const fetchRequests = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('/api/user/scraprequest/schedules', { withCredentials: true });
-      setRequests(response.data.schedules);
+      const response = await fetch('/api/user/scraprequest/schedules', {
+        method: 'GET',
+        credentials: 'include',
+      });
+      if (!response.ok) throw new Error('Failed to load requests');
+      const data = await response.json();
+      setRequests(data.schedules);
     } catch (err) {
       setError('Failed to load requests');
     } finally {
@@ -23,8 +27,13 @@ export const RequestProvider = ({ children }) => {
   const fetchRequestsByStatus = async (status) => {
     setLoading(true);
     try {
-      const response = await axios.get(`/api/user/scraprequest/status/${status}`, { withCredentials: true });
-      setRequests(response.data.schedules);
+      const response = await fetch(`/api/user/scraprequest/status/${status}`, {
+        method: 'GET',
+        credentials: 'include',
+      });
+      if (!response.ok) throw new Error('Failed to load requests by status');
+      const data = await response.json();
+      setRequests(data.schedules);
     } catch (err) {
       setError('Failed to load requests by status');
     } finally {
@@ -34,8 +43,17 @@ export const RequestProvider = ({ children }) => {
 
   const createRequest = async (newRequest) => {
     try {
-      const response = await axios.post('/api/user/scraprequest/schedule', newRequest, { withCredentials: true });
-      setRequests((prevRequests) => [...prevRequests, response.data.schedule]);
+      const response = await fetch('/api/user/scraprequest/schedule', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(newRequest),
+      });
+      if (!response.ok) throw new Error('Failed to create request');
+      const data = await response.json();
+      setRequests((prevRequests) => [...prevRequests, data.schedule]);
     } catch (err) {
       setError('Failed to create request');
     }

@@ -4,6 +4,7 @@ import MyRequests from "../../components/SCDashboard/Myrequests";
 import HistoryRequests from "../../components/SCDashboard/HistoryRequests";
 import Sidebar from "../../components/SCDashboard/Sidebar";
 import Settings from "../../components/SCDashboard/Settings";
+import AllRequests from "../../components/SCDashboard/AllRequests";
 
 
 
@@ -30,7 +31,7 @@ const ScrapCollectorDashboard = () => {
         {/* <Navbar /> */}
         <div className="p-6">
           {activeComponent === 'profile' && <Sprofile/>}
-          {activeComponent === 'requests' && <div>All Requests - Placeholder</div>}
+          {activeComponent === 'requests' && <AllRequests/>}
           {activeComponent === 'acceptedRequests' && <MyRequests/>}
           {activeComponent === 'history' && <HistoryRequests/>}
           {activeComponent === 'settings' && <Settings/>}
