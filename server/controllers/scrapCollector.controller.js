@@ -89,3 +89,46 @@ export const logoutScrapCollector = async (req, res) => {
     res.status(500).json({ success: false, error: 'Server error', message: error.message });
   }
 };
+
+
+export const updateScrapCollectorProfile = async (req, res) => {
+  try {
+    const scrapCollectorId = req.user._id;
+    const scrapCollector = await ScrapCollector.findById(scrapCollectorId);
+
+    if (!scrapCollector) {
+      return res.status(404).json({ message: "Scrap collector not found" });
+    }
+
+    let image = scrapCollector.image;
+    if (req.file) {
+      image = req.file.path;
+    }
+
+    const updatedData = {
+      name: req.body.name || scrapCollector.name,
+      contactNumber: req.body.contactNumber || scrapCollector.contactNumber,
+      areaPreference: req.body.areaPreference || scrapCollector.areaPreference,
+      image: image,
+    };
+
+    scrapCollector.name = updatedData.name;
+    scrapCollector.contactNumber = updatedData.contactNumber;
+    scrapCollector.areaPreference = updatedData.areaPreference;
+    scrapCollector.image = updatedData.image;
+
+    await scrapCollector.save();
+
+    res.status(200).json({
+      message: "Profile updated successfully",
+      scrapCollector,
+    });
+  } catch (error) {
+    console.error("Failed to update profile:", error);
+    res.status(500).json({
+      message: "Failed to update profile",
+      error: error.message,
+    });
+  }
+};
+

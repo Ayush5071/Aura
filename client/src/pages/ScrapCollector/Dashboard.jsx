@@ -3,14 +3,14 @@ import Sprofile from "../../components/SCDashboard/Sprofile";
 import MyRequests from "../../components/SCDashboard/Myrequests";
 import HistoryRequests from "../../components/SCDashboard/HistoryRequests";
 import Sidebar from "../../components/SCDashboard/Sidebar";
+import Settings from "../../components/SCDashboard/Settings";
 
-// import Navbar from "../../components/landing-page/Navbar";
+
 
 const ScrapCollectorDashboard = () => {
   const [activeComponent, setActiveComponent] = useState('profile');
   
   useEffect(() => {
-    // Placeholder text to show on dashboard (just for now)
     console.log("ScrapCollectorDashboard loaded.");
   }, []);
 
@@ -26,16 +26,14 @@ const ScrapCollectorDashboard = () => {
         <Sidebar onLinkClick={handleLinkClick} />
       </div>
 
-      {/* Main content area */}
       <div className="flex-1 bg-gray-100 overflow-auto" style={{ width: '82vw' }}>
         {/* <Navbar /> */}
         <div className="p-6">
-          {/* Just display some placeholder text based on the active component */}
           {activeComponent === 'profile' && <Sprofile/>}
           {activeComponent === 'requests' && <div>All Requests - Placeholder</div>}
           {activeComponent === 'acceptedRequests' && <MyRequests/>}
           {activeComponent === 'history' && <HistoryRequests/>}
-          {activeComponent === 'settings' && <div>Settings - Placeholder</div>}
+          {activeComponent === 'settings' && <Settings/>}
         </div>
       </div>
     </div>

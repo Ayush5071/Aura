@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import jwt, { decode } from "jsonwebtoken";
 import User from '../models/user.models.js';
 import ScrapCollector from '../models/scrapCollector.models.js';
 
@@ -12,12 +12,17 @@ export const isAuthenticated = (req, res, next) => {
         return res.status(401).json({ error: 'Not authenticated, token missing' });
     }
 
+    console.log("ye chl rha h");
+
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        console.log(decode,"milaaaa yyeeeyeyeyyeyeyeyeye")
         req.user = {
             userId: decoded.userId,
             role: decoded.role
         };
+
 
         console.log("Scrap collector userId ->", req.user.userId);
         console.log("Scrap collector role ->", req.user.role);
@@ -48,6 +53,7 @@ export const isCustomer = async (req, res, next) => {
 
 export const isScrapCollector = async (req, res, next) => {
     try {
+        console.log("aya yha")
         const scrapCollector = await ScrapCollector.findById(req.user.userId);
         console.log("scrpa collll --",scrapCollector);
 

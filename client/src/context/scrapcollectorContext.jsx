@@ -77,6 +77,19 @@ export const ScrapCollectorProvider = ({ children }) => {
     }
   };
 
+  const updateProfile = async (updatedData) => {
+    setLoading(true);
+    try {
+      const response = await axios.post("http://localhost:4000/api/scrapcollector/profile", updatedData); // Replace with actual API
+      setProfile(response.data); // Update local state with new profile data
+      return response.data; // Return updated profile if needed
+    } catch (error) {
+      throw new Error('Profile update failed');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Logout function
   const logoutScrapCollector = async () => {
     setLoading(true);
@@ -113,6 +126,7 @@ export const ScrapCollectorProvider = ({ children }) => {
         registerScrapCollector,
         fetchProfile,
         logoutScrapCollector,
+        updateProfile,
       }}
     >
       {children}
