@@ -1,16 +1,22 @@
-import  { useState } from 'react';
-import Sidebar from '../../components/SCDashboard/Sidebar';
-import Navbar from '../../components/UserDashboard/Navbar';
+import React, { useState } from 'react';
+import Sidebar from '../../components/UserDashboard/Sidebar';
+import Navbar from '../../components/landing-page/Navbar';
 import Profile from '../../components/UserDashboard/Profile';
-import Request from '../../components/UserDashboard/Request';
-import ScheduleList from '../../components/UserDashboard/ScheduleList';
+import CreateRequest from '../../components/UserDashboard/CreateRequest';
+import AllRequests from '../../components/UserDashboard/AllRequests';
+import Settings from '../../components/UserDashboard/Settings';
+// import { useUser } from '../../context/userContext';
+
 
 const CustomerDashboard = () => {
   const [activeComponent, setActiveComponent] = useState('');
+  // const { user } = useUser();
 
   const handleLinkClick = (component) => {
     setActiveComponent(component);
   };
+
+  // console.log(user,"user aa rha hai ?");
 
   return (
     <div className="flex h-screen">
@@ -22,9 +28,9 @@ const CustomerDashboard = () => {
         <Navbar/>
         <div className="p-6">
           {activeComponent === 'profile' && <Profile/>}
-          {activeComponent === 'requests' && <div><Request/></div>}
-          {activeComponent === 'myrequests' && <div><ScheduleList/></div>}
-          {activeComponent === 'settings' && <div>Settings Section</div>}
+          {activeComponent === 'requests' && <CreateRequest/>}
+          {activeComponent === 'myrequests' && <AllRequests/>}
+          {activeComponent === 'settings' && <Settings/>}
         </div>
       </div>
     </div>

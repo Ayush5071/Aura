@@ -1,68 +1,61 @@
-import  { useEffect } from "react";
-import { useUser } from "../../lib/userContext";
+import React, { useEffect } from "react";
+import { useUser } from "../../context/userContext";
 
 const Profile = () => {
-  const { profile, loading, error } = useUser(); // Now using profile data directly
+  const { user, profile, loading, error, fetchProfile } = useUser();
 
   useEffect(() => {
-    // You can add any additional logic for when profile data is fetched
-  }, [profile]);
+    if (user) {
+      fetchProfile(); // Fetch profile only when user is logged in
+    }
+  }, [user]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="text-center text-xl">Loading...</div>; // Show loading indicator
   }
 
   if (error) {
-    return <div className="text-red-500">Error: {error}</div>;
+    return <div className="text-center text-red-500">{error}</div>; // Show error message
   }
 
-  return (
-    <div className="w-[82vw] p-6">
-      <h2 className="text-2xl font-bold mb-4">Profile</h2>
+  if (!profile) {
+    return <div className="text-center">No profile data available</div>; // Fallback in case profile data is empty
+  }
 
-      <div className="flex items-center space-x-6 mb-6">
-        <div className="w-32 h-32 rounded-full bg-gray-200 overflow-hidden">
-          {/* Display profile image if exists */}
-          {profile?.image ? (
+  // Extract the user data
+  const { name, email, image, role, isVerified, contactNumber, address } = profile.user || {};
+
+  return (
+    <div className="max-w-2xl mx-auto p-8 bg-white shadow-lg rounded-lg mt-6">
+      <div className="flex flex-col items-center justify-center mb-6">
+        {/* Profile Image Section */}
+        <div className="w-32 h-32 rounded-full bg-gray-200 overflow-hidden mb-4">
+          {image ? (
             <img
-              src={profile?.image}
+              src={image}
               alt="Profile"
               className="w-full h-full object-cover"
             />
           ) : (
-            <div className="w-full h-full bg-gray-400 flex items-center justify-center text-white text-xl">
-              {profile?.name?.charAt(0)}
-            </div>
+            <span className="text-4xl text-white">{name?.charAt(0)}</span>
           )}
         </div>
 
-        <div>
-          <h3 className="text-xl font-semibold">{profile?.name}</h3>
-          <p className="text-gray-600">{profile?.email}</p>
-          <p className="text-gray-600">{profile?.role}</p>
-        </div>
+        <h3 className="text-2xl font-semibold text-gray-800">{name}</h3>
+        <p className="text-gray-500">{email}</p>
+        <p className="text-gray-500">{role}</p>
+        {isVerified && (
+          <span className="text-green-500 text-sm">Verified</span>
+        )}
       </div>
 
-      <div className="space-y-4">
-        <h3 className="font-semibold">My Details</h3>
-        <div className="space-y-2">
-          <p><strong>Contact Number:</strong> {profile?.contactNumber || 'N/A'}</p>
-          <p><strong>Address:</strong> {profile?.address || 'N/A'}</p>
+      {/* Contact and Address Section */}
+      <div className="mt-6">
+        <h4 className="font-semibold text-lg text-gray-800 mb-3">Contact Details</h4>
+        <div className="space-y-2 text-gray-600">
+          <p><strong>Contact Number:</strong> {contactNumber || 'N/A'}</p>
+          <p><strong>Address:</strong> {address || 'N/A'}</p>
         </div>
-
-        <h3 className="font-semibold">Schedules</h3>
-        {profile?.mySchedules?.length > 0 ? (
-          <ul className="space-y-2">
-            {profile.mySchedules.map((schedule, index) => (
-              <li key={index} className="p-2 border rounded-md">
-                <p><strong>Schedule {index + 1}:</strong></p>
-                <p>{schedule}</p> {/* Add more schedule details as per your requirement */}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No schedules available.</p>
-        )}
       </div>
     </div>
   );

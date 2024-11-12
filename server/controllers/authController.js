@@ -101,3 +101,34 @@ export const logoutUser = async (req, res) => {
       .json({ success: false, error: "Server error", message: error.message });
   }
 };
+
+
+export const updateProfile = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const user = await User.findById(userId);
+
+    console.log("aya");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const updatedData = {
+      ...req.body,
+      image: req.file ? req.file.path : user.image,
+    };
+
+    console.log(updatedData);
+
+    user.name = updatedData.name || user.name;
+    user.image = updatedData.image || user.image;
+
+    await user.save();
+
+    res.status(200).json({ message: "Profile updated successfully", user });
+  } catch (error) {
+    console.error("Failed to update profile:", error);
+    res.status(500).json({ message: "Failed to update profile", error: error.message });
+  }
+};
